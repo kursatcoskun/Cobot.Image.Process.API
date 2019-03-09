@@ -21,6 +21,8 @@ namespace HumanParts.Detection.API.Controllers
             _Apprepo = appRepo;
         }
 
+        #region GET METHODS
+
         [HttpGet]
         [Route("GetDetections")]
         public ActionResult GetAllDetections()
@@ -35,6 +37,11 @@ namespace HumanParts.Detection.API.Controllers
             var detection = _Apprepo.GetDetectionById(id);
             return Ok(detection);
         }
+
+        #endregion
+
+        #region POST METHODS
+
         [HttpPost]
         [Route("AddDetection")]
         public ActionResult AddDetection([FromBody] DetectionModel detection)
@@ -43,6 +50,11 @@ namespace HumanParts.Detection.API.Controllers
             _Apprepo.SaveAll();
             return Ok(detection);
         }
+
+        #endregion
+
+        #region PUT METHODS
+
         [HttpPut]
         [Route("UpdateDetection")]
         public ActionResult UpdateDetection([FromBody] DetectionModel detection)
@@ -51,6 +63,11 @@ namespace HumanParts.Detection.API.Controllers
             _Apprepo.SaveAll();
             return Ok(detection);
         }
+
+        #endregion
+
+        #region DELETE METHODS
+
         [HttpDelete]
         [Route("DeleteDetection")]
         public ActionResult DeleteDetectionById(int id)
@@ -58,5 +75,8 @@ namespace HumanParts.Detection.API.Controllers
             _Apprepo.deleteDetectionById(id);
             return Ok();
         }
+
+        #endregion
+
     }
 }
