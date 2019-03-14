@@ -11,9 +11,12 @@ namespace HumanParts.Detection.API.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-
+           
 
         }
         public DbSet<DetectionModel> Detections { get; set; }
+        public DbSet<DetectedObject> DetectedObjects { get; set; }
+        public DbSet <Device> Devices { get; set; }
+        public object Configuration { get; internal set; }
     }
 }

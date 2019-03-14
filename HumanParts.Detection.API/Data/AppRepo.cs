@@ -26,7 +26,7 @@ namespace HumanParts.Detection.API.Data
 
         public void deleteDetectionById(int id)
         {
-            var detection = _context.Detections.FirstOrDefault(x => x.id == id);
+            var detection = _context.Detections.FirstOrDefault(x => x.Id == id);
             _context.Remove(detection);
         }
 
@@ -38,7 +38,7 @@ namespace HumanParts.Detection.API.Data
 
         public DetectionModel GetDetectionById(int id)
         {
-            var detection = _context.Detections.FirstOrDefault(x => x.id == id);
+            var detection = _context.Detections.FirstOrDefault(x => x.Id == id);
             return detection;
         }
 

@@ -4,14 +4,16 @@ using HumanParts.Detection.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HumanParts.Detection.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190314203941_migrationV0.0.1")]
+    partial class migrationV001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,16 @@ namespace HumanParts.Detection.API.Migrations
 
                     b.Property<DateTime>("detectionTime");
 
-                    b.Property<int>("deviceId");
+                    b.Property<string>("deviceId")
+                        .IsRequired();
+
+                    b.Property<int?>("deviceId1");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("detectedObjectId");
+
+                    b.HasIndex("deviceId1");
 
                     b.ToTable("Detections");
                 });
@@ -64,6 +73,18 @@ namespace HumanParts.Detection.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Devices");
+                });
+
+            modelBuilder.Entity("HumanParts.Detection.API.Models.DetectionModel", b =>
+                {
+                    b.HasOne("HumanParts.Detection.API.Models.DetectedObject", "detectedObject")
+                        .WithMany()
+                        .HasForeignKey("detectedObjectId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HumanParts.Detection.API.Models.Device", "device")
+                        .WithMany()
+                        .HasForeignKey("deviceId1");
                 });
 #pragma warning restore 612, 618
         }

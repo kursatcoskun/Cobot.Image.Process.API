@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HumanParts.Detection.API.Data;
 using HumanParts.Detection.API.Models;
+using HumanParts.Detection.API.Output;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,14 +29,14 @@ namespace HumanParts.Detection.API.Controllers
         public ActionResult GetAllDetections()
         {
             var detections = _Apprepo.GetAllDetections();
-            return Ok(detections);
+            return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı", detections));
         }
         [HttpGet]
         [Route("GetDetectionById")]
         public ActionResult GetDetectionById(int id)
         {
             var detection = _Apprepo.GetDetectionById(id);
-            return Ok(detection);
+            return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı", detection));
         }
 
         #endregion
@@ -48,7 +49,7 @@ namespace HumanParts.Detection.API.Controllers
         {
             _Apprepo.Add(detection);
             _Apprepo.SaveAll();
-            return Ok(detection);
+            return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı", detection));
         }
 
         #endregion
@@ -61,7 +62,7 @@ namespace HumanParts.Detection.API.Controllers
         {
             _Apprepo.Update(detection);
             _Apprepo.SaveAll();
-            return Ok(detection);
+            return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı", detection));
         }
 
         #endregion
@@ -73,7 +74,7 @@ namespace HumanParts.Detection.API.Controllers
         public ActionResult DeleteDetectionById(int id)
         {
             _Apprepo.deleteDetectionById(id);
-            return Ok();
+            return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı",id));
         }
 
         #endregion
