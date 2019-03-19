@@ -11,11 +11,14 @@ namespace HumanParts.Detection.API.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required(ErrorMessage = "Tanınan Nesnenin Girilmesi Gerekmektedir.")]
+        [ForeignKey("detectedObject")]
         public int detectedObjectId { get; set; }
         public DateTime detectionTime { get; set; }
-        [Required(ErrorMessage="Cihaz Id'si girlmesi gereklidir.")]
+        [ForeignKey("device")]
         public int deviceId { get; set; }
+
+        public virtual Device device { get; set; }
+        public virtual DetectedObject detectedObject { get; set; }
 
 
     }

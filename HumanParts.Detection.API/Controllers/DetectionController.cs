@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HumanParts.Detection.API.Dao;
 using HumanParts.Detection.API.Data;
 using HumanParts.Detection.API.Models;
 using HumanParts.Detection.API.Output;
@@ -45,8 +46,14 @@ namespace HumanParts.Detection.API.Controllers
 
         [HttpPost]
         [Route("AddDetection")]
-        public ActionResult AddDetection([FromBody] DetectionModel detection)
+        public ActionResult AddDetection([FromBody] DetectionInput detectionInput)
         {
+
+            DetectionModel detection = new DetectionModel();
+            detection.deviceId = detectionInput.deviceId;
+            detection.Id = detectionInput.Id;
+            detection.detectionTime = detectionInput.detectionTime;
+            detection.detectedObjectId = detectionInput.detectedObjectId;
             _Apprepo.Add(detection);
             _Apprepo.SaveAll();
             return Ok(new ApiResponse(true, 200, 0, 0, "Başarılı", detection));

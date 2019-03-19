@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanParts.Detection.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190314203941_migrationV0.0.1")]
-    partial class migrationV001
+    [Migration("20190315183521_migrationV0.0.8")]
+    partial class migrationV008
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,16 +44,13 @@ namespace HumanParts.Detection.API.Migrations
 
                     b.Property<DateTime>("detectionTime");
 
-                    b.Property<string>("deviceId")
-                        .IsRequired();
-
-                    b.Property<int?>("deviceId1");
+                    b.Property<int>("deviceId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("detectedObjectId");
 
-                    b.HasIndex("deviceId1");
+                    b.HasIndex("deviceId");
 
                     b.ToTable("Detections");
                 });
@@ -84,7 +81,8 @@ namespace HumanParts.Detection.API.Migrations
 
                     b.HasOne("HumanParts.Detection.API.Models.Device", "device")
                         .WithMany()
-                        .HasForeignKey("deviceId1");
+                        .HasForeignKey("deviceId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

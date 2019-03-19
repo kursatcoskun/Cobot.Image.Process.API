@@ -12,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace HumanParts.Detection.API
 {
@@ -28,11 +30,17 @@ namespace HumanParts.Detection.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc()
+          .AddJsonOptions(
+              options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+          );
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IAppRepo, AppRepo>();
+            services.AddScoped<IValuesRepo, ValuesRepo>();
             services.AddDbContext<DataContext>(x =>
-           x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+           x
+           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
            );
             services.AddSwaggerGen(c =>
             {
@@ -58,6 +66,8 @@ namespace HumanParts.Detection.API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Human Parts Detection API V1");
+                c.DocExpansion(DocExpansion.None);
+                c.DisplayRequestDuration();
             });
         }
     }

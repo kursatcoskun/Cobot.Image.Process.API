@@ -4,14 +4,16 @@ using HumanParts.Detection.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HumanParts.Detection.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190315181641_migrationV0.0.5")]
+    partial class migrationV005
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +80,7 @@ namespace HumanParts.Detection.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("HumanParts.Detection.API.Models.Device", "device")
-                        .WithMany()
+                        .WithMany("detectionModels")
                         .HasForeignKey("deviceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

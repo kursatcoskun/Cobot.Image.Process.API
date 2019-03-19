@@ -1,5 +1,6 @@
 ﻿using HumanParts.Detection.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,17 @@ namespace HumanParts.Detection.API.Data
 {
     public class DataContext: DbContext
     {
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<DetectionModel>()
+                        .HasOne(a => a.device)
+                        .WithMany();
+            modelBuilder.Entity<DetectionModel>()
+                        .HasOne(x => x.detectedObject)
+                        .WithMany();
+        }
+   
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
            
@@ -17,6 +29,6 @@ namespace HumanParts.Detection.API.Data
         public DbSet<DetectionModel> Detections { get; set; }
         public DbSet<DetectedObject> DetectedObjects { get; set; }
         public DbSet <Device> Devices { get; set; }
-        public object Configuration { get; internal set; }
+
     }
 }

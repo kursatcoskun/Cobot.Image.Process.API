@@ -44,8 +44,7 @@ namespace HumanParts.Detection.API.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     detectedObjectId = table.Column<int>(nullable: false),
                     detectionTime = table.Column<DateTime>(nullable: false),
-                    deviceId = table.Column<string>(nullable: false),
-                    deviceId1 = table.Column<int>(nullable: true)
+                    deviceId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,11 +56,11 @@ namespace HumanParts.Detection.API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Detections_Devices_deviceId1",
-                        column: x => x.deviceId1,
+                        name: "FK_Detections_Devices_deviceId",
+                        column: x => x.deviceId,
                         principalTable: "Devices",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -70,9 +69,9 @@ namespace HumanParts.Detection.API.Migrations
                 column: "detectedObjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Detections_deviceId1",
+                name: "IX_Detections_deviceId",
                 table: "Detections",
-                column: "deviceId1");
+                column: "deviceId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

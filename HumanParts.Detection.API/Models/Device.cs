@@ -11,5 +11,6 @@ namespace HumanParts.Detection.API.Models
         public string Name { get; set; }
         public string rosVersion { get; set; }
         public string OperatingSystemVersion { get; set; }
+
     }
 }
