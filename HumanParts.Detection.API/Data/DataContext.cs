@@ -29,6 +29,7 @@ namespace HumanParts.Detection.API.Data
         public DbSet<DetectionModel> Detections { get; set; }
         public DbSet<DetectedObject> DetectedObjects { get; set; }
         public DbSet <Device> Devices { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
