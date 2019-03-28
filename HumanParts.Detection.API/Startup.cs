@@ -47,7 +47,7 @@ namespace HumanParts.Detection.API
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddDbContext<DataContext>(x =>
            x
-           .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+           .UseNpgsql(Configuration.GetConnectionString("HumanPartsAPIConnection"))
            );
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
